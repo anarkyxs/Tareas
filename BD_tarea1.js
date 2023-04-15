@@ -1,31 +1,33 @@
+// Nombre: Felipe Andres Agurto Henriquez
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ejercicio N°1
-// Paso 1: Crear la base de datos y las colecciones
+// 1: Crear la base de datos y las colecciones
 use tienda
 db.createCollection("clientes")
 db.createCollection("productos")
 
-// Paso 2a: Mostrar todas las bases de datos
+// 2a: Mostrar todas las bases de datos
 show dbs
 
-// Paso 2b: Chequear la base de datos seleccionada
+// 2b: Chequear la base de datos seleccionada
 db
 
-// Paso 2c: Ver las colecciones de la base de datos seleccionada
+// 2c: Ver las colecciones de la base de datos seleccionada
 show collections
 
-// Paso 2d: Visualizar la ayuda de la colección clientes
+// 2d: Visualizar la ayuda de la colección clientes
 db.clientes.help()
 
-// Paso 3: Eliminar todas las colecciones
+// 3: Eliminar todas las colecciones
 db.clientes.drop()
 db.productos.drop()
 
-// Paso 4: Eliminar la base de datos tienda
+// 4: Eliminar la base de datos tienda
 db.dropDatabase()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Ejercicio N°2
-// Paso 1: Crear la base de datos, colección y un documento
+// 1: Crear la base de datos, colección y un documento
 use transporte
 db.createCollection("pasajes")
 db.pasajes.insertOne({
@@ -37,7 +39,7 @@ db.pasajes.insertOne({
   precio: 5000
 })
 
-// Paso 2a: Insertar tres documentos usando insert
+// 2a: Insertar tres documentos usando insert
 db.pasajes.insert({
   codPasaje: 2,
   rutPasajero: "22.222.222-2",
@@ -63,7 +65,7 @@ db.pasajes.insert({
   precio: 10000
 })
 
-// Paso 2b: Insertar tres documentos usando insertOne
+// 2b: Insertar tres documentos usando insertOne
 db.pasajes.insertOne({
   codPasaje: 5,
   rutPasajero: "55.555.555-5",
@@ -89,7 +91,7 @@ db.pasajes.insertOne({
   precio: 2000
 })
 
-// Paso 2c: Insertar tres documentos usando insertMany
+// 2c: Insertar tres documentos usando insertMany
 db.pasajes.insertMany([
   {
     codPasaje: 8,
@@ -117,16 +119,16 @@ db.pasajes.insertMany([
   }
 ])
 
-// Paso 3: Listar los documentos insertados
+// 3: Listar los documentos insertados
 db.pasajes.find().forEach(printjson)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ejercicio N°3
-// Paso 1: Crear la base de datos y la colección
+// 1: Crear la base de datos y la colección
 use farmacia
 db.createCollection("medicamentos")
 
-// Paso 2: Insertar los documentos
+// 2: Insertar los documentos
 db.medicamentos.insertMany([
    {
       nombre: "Sertal",
@@ -166,27 +168,28 @@ db.medicamentos.insertMany([
    }
 ])
 
-// Paso 3: Seleccionar todos los medicamentos
+// 3: Seleccionar todos los medicamentos
 db.medicamentos.find()
 
-// Paso 4: Seleccionar todos los medicamentos cuyo laboratorio sea Roche
+// 4: Seleccionar todos los medicamentos cuyo laboratorio sea Roche
 db.medicamentos.find({ laboratorio: "Roche" })
 
-// Paso 5: Seleccionar todos los medicamentos cuyo laboratorio NO sea Bayer
+// 5: Seleccionar todos los medicamentos cuyo laboratorio NO sea Bayer
 db.medicamentos.find({ laboratorio: { $ne: "Bayer" } })
 
-// Paso 6: Seleccionar todos los medicamentos cuya cantidad sea mayor a 100
+// 6: Seleccionar todos los medicamentos cuya cantidad sea mayor a 100
 db.medicamentos.find({ cantidad: { $gt: 100 } })
 
-// Paso 7: Eliminar todos los medicamentos cuyo laboratorio sea Bayer
+// 7: Eliminar todos los medicamentos cuyo laboratorio sea Bayer
 db.medicamentos.deleteMany({ laboratorio: "Bayer" })
 
-// Paso 8: Actualizar la cantidad a 200, para todos los medicamentos cuyo laboratorio sea Roche
+// 8: Actualizar la cantidad a 200, para todos los medicamentos cuyo laboratorio sea Roche
 db.medicamentos.updateMany({ laboratorio: "Roche" }, { $set: { cantidad: 200 } })
 
-// Paso 9: Borrar todos los medicamentos
+// 9: Borrar todos los medicamentos
 db.medicamentos.drop()
 
-// Paso 10: Eliminar la base de datos farmacia
+// 10: Eliminar la base de datos farmacia
 db.dropDatabase()
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

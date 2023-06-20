@@ -19,7 +19,12 @@ db = client['apirest']
 # Función para agregar los datos base al servidor
 def agregar_datos_base():
     collection = db['apirest_collection']
-    collection.insert_many(datos_base)
+    for dato in datos_base:
+        modelo = dato['modelo']
+        existing_data = collection.find_one({'modelo': modelo})
+        if not existing_data:
+            collection.insert_one(dato)
+
 
 # Llamada a la función para agregar los datos base
 agregar_datos_base()
@@ -47,8 +52,8 @@ def jsonify_with_objectid(data):
 # API REST
 
 # GET (Recupera datos del servidor)
-@app.route('/api', methods=['GET'])
-@app.route('/api/<path:query>', methods=['GET'])
+@app.route('/productos', methods=['GET'])
+@app.route('/productos/<path:query>', methods=['GET'])
 def get_data(query=None):
     # Selección de la colección
     collection = db['apirest_collection']
@@ -80,7 +85,7 @@ def get_data(query=None):
 
 
 # POST (Crea un nuevo recurso en el servidor)
-@app.route('/api', methods=['POST'])
+@app.route('/productos', methods=['POST'])
 def create_data():
     # Selección de la colección
     collection = db['apirest_collection']
@@ -92,7 +97,7 @@ def create_data():
 
 
 # PUT (Actualiza completamente un recurso existente en el servidor)
-@app.route('/api/<string:id>', methods=['PUT'])
+@app.route('/productos/<string:id>', methods=['PUT'])
 def update_data(id):
     # Selección de la colección
     collection = db['apirest_collection']
@@ -102,21 +107,8 @@ def update_data(id):
     collection.update_one({'_id': ObjectId(id)}, {'$set': updated_data})
     return jsonify({'message': 'Datos actualizados'})
 
-
-# PATCH (Actualiza parcialmente un recurso existente en el servidor)
-@app.route('/api/<string:id>', methods=['PATCH'])
-def partial_update_data(id):
-    # Selección de la colección
-    collection = db['apirest_collection']
-    # Obtener los campos actualizados enviados en la solicitud
-    updated_fields = request.get_json()
-    # Actualizar parcialmente los datos en la colección usando el ID proporcionado
-    collection.update_one({'_id': ObjectId(id)}, {'$set': updated_fields})
-    return jsonify({'message': 'Datos parcialmente actualizados'})
-
-
 # DELETE (Elimina un recurso existente en el servidor)
-@app.route('/api/<string:id>', methods=['DELETE'])
+@app.route('/productos/<string:id>', methods=['DELETE'])
 def delete_data(id):
     # Selección de la colección
     collection = db['apirest_collection']
